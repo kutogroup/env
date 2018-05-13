@@ -1,0 +1,10 @@
+#!/bin/bash
+
+WINID=`xdotool getactivewindow`
+x=`xdotool getactivewindow | xargs xwininfo -id | grep "Absolute upper-left X" | awk '{print $4}'`
+
+if [ "$x" -eq 0 ]; then
+    wmctrl -r :ACTIVE: -b remove,maximized_vert,maximized_horz
+else 
+    wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
+fi

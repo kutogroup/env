@@ -1,0 +1,9 @@
+{
+    "server":"en.transacme.com",
+    "server_port":12315,
+    "local_address": "127.0.0.1",
+    "local_port":1080,
+    "password":"reallytek@2017",
+    "timeout":300,
+    "method":"aes-256-cfb"
+}

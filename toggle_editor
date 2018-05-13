@@ -1,0 +1,16 @@
+#!/bin/bash
+
+KEY="Bluefish"
+PID=`wmctrl -pl | grep "$KEY" | head -n 1 | awk '{print $1}'`
+FOCUS=`xdotool getactivewindow`
+
+if [ -n "$PID" ]; then
+    PID_INT=`printf %d $PID`
+    if [ "$PID_INT" == "$FOCUS" ]; then
+        xdotool windowminimize $FOCUS
+    else
+        xdotool windowactivate $PID_INT
+    fi
+else 
+    /usr/bin/bluefish
+fi

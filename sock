@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sslocal -c /data/env/bin/sock.json
