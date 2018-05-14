@@ -1,21 +1,25 @@
 #!/bin/bash
 
-KEY="termin"
+KEY="/usr/bin/termin"
 P=`ps -el | grep "$KEY" | head -n 1 | awk '{print $4}'`
-PID=`wmctrl -pl | grep "$P" | head -n 1 | awk '{print $1}'`
-FOCUS=`xdotool getactivewindow`
-echo "P="$P
-echo "PID="$PID
-echo "FOCUS="$FOCUS
+if [ -n "$P" ]; then
+    PID=`wmctrl -pl | grep "$P" | head -n 1 | awk '{print $1}'`
+    FOCUS=`xdotool getactivewindow`
+    echo "P="$P
+    echo "PID="$PID
+    echo "FOCUS="$FOCUS
 
-if [ -n "$PID" ]; then
-    PID_INT=`printf %d $PID`
-    echo "PIDINT="$PID_INT
-    if [ "$PID_INT" == "$FOCUS" ]; then
-        xdotool windowminimize $FOCUS
-    else
-        xdotool windowactivate $PID_INT
+    if [ -n "$PID" ]; then
+        PID_INT=`printf %d $PID`
+        echo "PIDINT="$PID_INT
+        if [ "$PID_INT" == "$FOCUS" ]; then
+            xdotool windowminimize $FOCUS
+        else
+            xdotool windowactivate $PID_INT
+        fi
+    else 
+        /usr/bin/terminator
     fi
-else 
+else
     /usr/bin/terminator
 fi

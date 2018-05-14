@@ -1,6 +1,6 @@
 #!/bin/bash
 
-offset=1000
+offset=900
 
 WINID=`xdotool getactivewindow`
 y=`xdotool getactivewindow | xargs xwininfo -id | grep "Absolute upper-left Y" | awk '{print $4}'`
