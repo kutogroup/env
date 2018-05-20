@@ -1,0 +1,19 @@
+#!/bin/bash
+
+KEY="Wechat"
+PID=`wmctrl -pl | grep "$KEY" | head -n 1 | awk '{print $1}'`
+FOCUS=`xdotool getactivewindow`
+echo "PID="$PID
+echo "FOCUS="$FOCUS
+
+if [ -n "$PID" ]; then
+    PID_INT=`printf %d $PID`
+    echo "PID_INT"$PID_INT
+    if [ "$PID_INT" == "$FOCUS" ]; then
+        xdotool windowminimize $FOCUS
+    else
+        xdotool windowactivate $PID_INT
+    fi
+else 
+    /opt/google/chrome/google-chrome --profile-directory=Default --app-id=ckhliaadcjmdjbhdlkpjkffidcifglba
+fi

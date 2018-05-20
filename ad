@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    /work/tools/android-studio/bin/studio.sh
+elif [ "$1" == "java" ]; then
+    if [ -z "$2" ]; then
+        echo "no apk specfic"
+        exit 0
+    fi  
+
+    rm /work/tools/apktool/classes.dex
+    rm /work/tools/apktool/classes-dex2jar.jar
+    unzip $2 classes.dex -d /work/tools/apktool
+    cd /work/tools/apktool
+    dex2jar-2.0/d2j-dex2jar.sh classes.dex
+    jd classes-dex2jar.jar 
+    rm /work/tools/apktool/classes.dex
+    rm /work/tools/apktool/classes-dex2jar.jar
+elif [ "$1" == "xml" ]; then
+    rm /work/tools/apktool/AndroidManifest.xml
+    rm /work/tools/apktool/1.xml
+    unzip $2 AndroidManifest.xml -d /work/tools/apktool
+    cd /work/tools/apktool
+    java -jar AXMLPrinter2.jar AndroidManifest.xml>1.xml
+    mousepad 1.xml
+    rm AndroidManifest.xml
+    rm 1.xml
+elif [ "$1" == "res" ]; then
+    rm /work/tools/apktool/temp -rf
+    java -jar /work/tools/apktool/apktool_2.3.3.jar d $2 -o /work/tools/apktool/temp
+    thunar /work/tools/apktool/temp
+elif [ "$1" == "error" ]; then
+    adb logcat -s AndroidRuntime:*
+fi
